@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Tap Ghosts</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    background: radial-gradient(#111, #000);
+    overflow: hidden;
+    cursor: pointer;
+}
+
+/* GHOST */
+.ghost {
+    width: 120px;
+    height: 150px;
+    background: #f5f5f5;
+    border-radius: 60px 60px 30px 30px;
+    position: absolute;
+    bottom: -160px;
+    animation: rise 3s ease-out forwards;
+}
+
+/* WAVY BOTTOM */
+.ghost::after {
+    content: "";
+    position: absolute;
+    bottom: -15px;
+    width: 100%;
+    height: 30px;
+    background: repeating-radial-gradient(
+        circle at 15px 0,
+        #f5f5f5 0 15px,
+        transparent 16px 30px
+    );
+}
+
+/* EYES */
+.eye {
+    width: 14px;
+    height: 14px;
+    background: black;
+    border-radius: 50%;
+    position: absolute;
+    top: 50px;
+}
+.eye.left { left: 35px; }
+.eye.right { right: 35px; }
+
+/* MOUTH */
+.mouth {
+    width: 20px;
+    height: 12px;
+    border: 2px solid black;
+    border-top: none;
+    border-radius: 0 0 12px 12px;
+    position: absolute;
+    top: 80px;
+    left: 50px;
+}
+
+/* FLOAT ANIMATION */
+@keyframes rise {
+    0% {
+        transform: translateY(0);
+        opacity: 0;
+    }
+    20% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-400px);
+        opacity: 0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<script>
+document.addEventListener("click", (e) => {
+    const ghost = document.createElement("div");
+    ghost.className = "ghost";
+    ghost.style.left = (e.clientX - 60) + "px";
+
+    ghost.innerHTML = `
+        <div class="eye left"></div>
+        <div class="eye right"></div>
+        <div class="mouth"></div>
+    `;
+
+    document.body.appendChild(ghost);
+
+    setTimeout(() => {
+        ghost.remove();
+    }, 3000);
+});
+</script>
+
+</body>
+</html>
